@@ -13,9 +13,10 @@ client.on('ready', () =>{
 
 client.on('message', msg=>{
     
-    let args = msg.content.split(" ");
 
-    args.forEach(element => {
+    let messageArgs = msg.content.split(" ");
+
+    messageArgs.forEach(element => {
         wordFile.words.forEach(elemnt => {
             if (elemnt == element.toLowerCase()) {
                 msg.react('🍞');
@@ -24,12 +25,6 @@ client.on('message', msg=>{
             }
         })
     });
-    
-    switch(args[0]) {
-        case 'ping':
-            msg.reply('pong');
-        break;
-    }
 })
 
 client.login(config.token);
