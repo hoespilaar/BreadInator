@@ -13,7 +13,6 @@ client.on('ready', () =>{
 
 client.on('message', msg=>{
     
-
     let messageArgs = msg.content.split(" ");
 
     messageArgs.forEach(element => {
