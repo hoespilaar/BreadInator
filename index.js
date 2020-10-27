@@ -4,6 +4,7 @@ const client = new Discord.Client();
 const prfx = '!';
 
 const fs = require('fs');
+const { endianness } = require('os');
 var wordFile = require('./BreadRelatedWords.json');
 var config = require('./config.json')
 
@@ -15,14 +16,34 @@ client.on('message', msg=>{
     
     let messageArgs = msg.content.split(" ");
 
-    messageArgs.forEach(element => {
-        wordFile.words.forEach(elemnt => {
-            if (elemnt == element.toLowerCase()) {
-                msg.react('🍞');
-            } else if (element == "baguette") {
-                msg.react('🥖');
-            }
-        });
+    wordFile.bread.forEach(element => {
+        if (msg.content.toLowerCase().includes(element)) {
+            msg.react('🍞');
+        }
+    });
+
+    wordFile.baguette.forEach(element => {
+        if (msg.content.toLowerCase().includes(element)) {
+            msg.react('🥖');
+        }
+    });
+
+    wordFile.hamburger.forEach(element => {
+        if (msg.content.toLowerCase().includes(element)) {
+            msg.react('🍔');
+        }
+    });
+
+    wordFile.cheese.forEach(element => {
+        if (msg.content.toLowerCase().includes(element)) {
+            msg.react('🧀');
+        }
+    });
+
+    wordFile.croissant.forEach(element => {
+        if (msg.content.toLowerCase().includes(element)) {
+            msg.react('🥐');
+        }
     });
 })
 
