@@ -22,7 +22,7 @@ client.on('message', msg=>{
             } else if (element == "baguette") {
                 msg.react('🥖');
             }
-        })
+        });
     });
 })
 
