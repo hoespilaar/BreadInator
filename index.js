@@ -3,9 +3,11 @@ const client = new Discord.Client();
 
 const fs = require('fs');
 const { endianness } = require('os');
+const { spawn } = require('child_process');
 
 var wordFile = require('./BreadRelatedWords.json');
 var config = require('./config.json');
+var reset = "./reset.sh";
 
 client.on('ready', () =>{
     console.log('Bot online');
@@ -13,7 +15,7 @@ client.on('ready', () =>{
 
 client.on('message', msg=>{
     
-    if (msg.content.substr(0, 2) == wordFile.prefix) {
+    if (msg.content.substr(0, 2).toLowerCase() == wordFile.prefix) {
         commands(msg);
     }
 
@@ -25,6 +27,8 @@ function commands (msg) {
 
     if (messageArgs[0].toLowerCase() == "status"){
         msg.reply("The bot is working.");
+    } else if (messageArgs[0].toLowerCase == "reset") {
+        spawn(reset);
     }
 }
 
