@@ -3,11 +3,12 @@ const client = new Discord.Client();
 
 const fs = require('fs');
 const { endianness } = require('os');
-const { spawn } = require('child_process');
+const { exec } = require('child_process');
 
 var wordFile = require('./BreadRelatedWords.json');
 var config = require('./config.json');
-var reset = "./reset.sh";
+const { stdout, stderr } = require('process');
+var reset = "Reset.sh";
 
 client.on('ready', () =>{
     console.log('Bot online');
@@ -27,8 +28,15 @@ function commands (msg) {
 
     if (messageArgs[0].toLowerCase() == "status"){
         msg.reply("The bot is working.");
-    } else if (messageArgs[0].toLowerCase == "reset") {
-        spawn(reset);
+    } else if (messageArgs[0].toLowerCase() == "reset") {
+        exec(reset, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`exec error: ${error}`);
+            }
+            console.log(`stdout: ${stdout}`);
+            console.error(`stderr: ${stderr}`);
+        });
+        msg.react("minecraft server rebooting");
     }
 }
 
