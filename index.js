@@ -1,22 +1,23 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
+const { Client, GatewayIntentBits } = require('discord.js');
 
-const fs = require('fs');
-const { endianness } = require('os');
-const { exec } = require('child_process');
+const client = new Client({
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent
+	]
+});
 
 var wordFile = require('./BreadRelatedWords.json');
 var config = require('./config.json');
-const { stdout, stderr } = require('process');
-var reset = "Reset.sh";
 
-client.on('ready', () =>{
+client.on('clientReady', () =>{
     console.log('Bot online');
 })
 
-client.on('message', msg=>{
+client.on('messageCreate', msg=>{
     
-    if (msg.content.substr(0, 2).toLowerCase() == wordFile.prefix) {
+    if (msg.content.substring(0, 2).toLowerCase() == wordFile.prefix) {
         commands(msg);
     }
 
@@ -28,15 +29,6 @@ function commands (msg) {
 
     if (messageArgs[0].toLowerCase() == "status"){
         msg.reply("The bot is working.");
-    } else if (messageArgs[0].toLowerCase() == "reset") {
-        exec(reset, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`exec error: ${error}`);
-            }
-            console.log(`stdout: ${stdout}`);
-            console.error(`stderr: ${stderr}`);
-        });
-        msg.react("minecraft server rebooting");
     }
 }
 
@@ -72,5 +64,6 @@ function testForKeyWords (msg) {
         }
     });
 }
+
 
 client.login(config.token);

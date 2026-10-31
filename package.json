@@ -9,6 +9,6 @@
   "author": "Hoespilaar",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "^12.2.0"
+    "discord.js": "^14.28.0"
   }
 }
